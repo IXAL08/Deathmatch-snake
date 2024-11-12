@@ -133,6 +133,7 @@ GameObject:
   - component: {fileID: 95529480}
   - component: {fileID: 95529479}
   - component: {fileID: 95529478}
+  - component: {fileID: 95529481}
   m_Layer: 0
   m_Name: Speed
   m_TagString: Speed
@@ -252,6 +253,20 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &95529481
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 95529476}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ecda4b135e030a041aeb7adf9f4df9e9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  GridArea: {fileID: 549841165}
+  Cooldown: 0
 --- !u!1 &502522684
 GameObject:
   m_ObjectHideFlags: 0
@@ -664,6 +679,7 @@ GameObject:
   - component: {fileID: 1273529225}
   - component: {fileID: 1273529224}
   - component: {fileID: 1273529223}
+  - component: {fileID: 1273529226}
   m_Layer: 0
   m_Name: Food
   m_TagString: Food
@@ -783,6 +799,19 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1273529226
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1273529222}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8c6de656c0834ab4d987fc08b85c3d9b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  GridArea: {fileID: 549841165}
 --- !u!1 &1784059310
 GameObject:
   m_ObjectHideFlags: 0

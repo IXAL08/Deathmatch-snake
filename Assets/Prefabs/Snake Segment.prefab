@@ -116,7 +116,7 @@ BoxCollider2D:
   m_CallbackLayers:
     serializedVersion: 2
     m_Bits: 4294967295
-  m_IsTrigger: 1
+  m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
@@ -130,7 +130,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 1, y: 1}
+  m_Size: {x: 0.8, y: 0.8}
   m_EdgeRadius: 0
 --- !u!114 &-1306599883643934096
 MonoBehaviour:
@@ -153,10 +153,10 @@ MonoBehaviour:
     Position: 1
     Rotation: 1
     Scale: 0
-  _interpolation: 2
-  _extrapolation: 2
+  _interpolation: 5
+  _extrapolation: 1
   _enableTeleport: 0
-  _teleportThreshold: 1
+  _teleportThreshold: 0.1
   _clientAuthoritative: 1
   _sendToOwner: 1
   _interval: 1
@@ -165,12 +165,12 @@ MonoBehaviour:
     X: 0
     Y: 0
     Z: 0
-  _synchronizeRotation: 1
+  _synchronizeRotation: 0
   _rotationSnapping:
     X: 0
     Y: 0
     Z: 0
-  _synchronizeScale: 1
+  _synchronizeScale: 0
   _scaleSnapping:
     X: 0
     Y: 0
@@ -193,10 +193,9 @@ MonoBehaviour:
   <PredictedOwner>k__BackingField: {fileID: 0}
   _networkBehaviours:
   - {fileID: -1306599883643934096}
-  - {fileID: 0}
   <SerializedRootNetworkBehaviour>k__BackingField: {fileID: 0}
   <SerializedNestedNetworkObjects>k__BackingField: []
-  _isNetworked: 0
+  _isNetworked: 1
   _isSpawnable: 1
   _isGlobal: 0
   _initializeOrder: 0
@@ -215,7 +214,7 @@ MonoBehaviour:
   _spectatorInterpolation: 2
   _enableTeleport: 0
   _teleportThreshold: 1
-  <PrefabId>k__BackingField: 4
+  <PrefabId>k__BackingField: 3
   <SpawnableCollectionId>k__BackingField: 0
   <AssetPathHash>k__BackingField: 11613163676495563667
   <SceneId>k__BackingField: 0
