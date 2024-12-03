@@ -16,7 +16,6 @@ public class PlayerControllerNetwork : NetworkBehaviour
     public readonly SyncVar<bool> isAlive = new SyncVar<bool>(true);
     public Transform _SegmentsPrefab;
     public GameObject canvas;
-
     private void Awake()
     {
         _SnakeSegments.OnChange += _SnakeSegments_OnChange;
@@ -26,12 +25,8 @@ public class PlayerControllerNetwork : NetworkBehaviour
 
     public override void OnStartNetwork()
     {
-        if (Owner.IsLocalClient)
-        {
-            name += "(local)";
-            GetComponent<Renderer>().material.color = Color.green;
-
-        }
+        
+        GameManager.Instance.Players.Add(base.NetworkObject);
     }
 
     // Update is called once per frame
@@ -39,6 +34,14 @@ public class PlayerControllerNetwork : NetworkBehaviour
     {
         if (!IsOwner)
             return;
+
+        if (GameManager.Instance.Start == true)
+        {
+            isAlive.Value = false;
+        }else
+        {
+            isAlive.Value = true;
+        }
 
         if (isAlive.Value)
         {
@@ -65,10 +68,10 @@ public class PlayerControllerNetwork : NetworkBehaviour
 
         }
 
-        
+
     }
 
-   
+
     private void FixedUpdate()
     {
         if (!IsOwner)
@@ -105,13 +108,13 @@ public class PlayerControllerNetwork : NetworkBehaviour
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        if (!IsServerStarted) return;
         if (collision.gameObject.tag == "Obstacle")
         {
             Dead();
-            print(collision.gameObject.name);
+            CanvasOn(Owner);
         }
     }
+
 
 
     void Grow()
@@ -123,23 +126,23 @@ public class PlayerControllerNetwork : NetworkBehaviour
 
     }
 
-    [ServerRpc (RequireOwnership = false)]
+    [ObserversRpc]
     void Dead()
     {
-        CambiarBoolRPC();
+
         StartCoroutine(DeadAnimation());
     }
 
     private void _SnakeSegments_OnChange(SyncListOperation op, int index, Transform oldItem, Transform newItem, bool asServer)
     {
-        switch (op) { 
+        switch (op) {
             case SyncListOperation.Add:
                 print("Crecio");
-            break;
+                break;
 
             case SyncListOperation.Complete:
-            break;
-            
+                break;
+
         }
     }
 
@@ -151,7 +154,7 @@ public class PlayerControllerNetwork : NetworkBehaviour
         StartCoroutine(PowerUpSpeed());
     }
 
-    
+
     public IEnumerator PowerUpSpeed()
     {
         UpdateClientSpeed(1.5f);
@@ -176,7 +179,7 @@ public class PlayerControllerNetwork : NetworkBehaviour
     }
 
     public IEnumerator DeadAnimation() {
-
+        CambiarBoolRPC();
         speed = 0;
         yield return new WaitForSeconds(2f);
         for (int i = 1; i < _SnakeSegments.Count; i++)
@@ -187,17 +190,26 @@ public class PlayerControllerNetwork : NetworkBehaviour
         _SnakeSegments.Clear();
         SpriteRenderer spriteRenderer = GetComponent<SpriteRenderer>();
         spriteRenderer.enabled = false;
-        canvas.SetActive(true);
+        GameManager.Instance.Players.Remove(base.NetworkObject);
+        yield return new WaitForSeconds(2f);
     }
 
     private void IsAlive_OnChange(bool prev, bool next, bool asServer)
     {
-        print("Cambio");
+
     }
 
-    [ServerRpc(RunLocally = false)]
+    [ObserversRpc]
     void CambiarBoolRPC()
     {
         isAlive.Value = false;
     }
+
+    [TargetRpc]
+    public void CanvasOn(NetworkConnection conn)
+    {
+        canvas.SetActive(true);
+    }
+
+
 }

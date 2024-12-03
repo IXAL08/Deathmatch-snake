@@ -1,6 +1,8 @@
 using FishNet;
 using FishNet.Connection;
+using FishNet.Demo.AdditiveScenes;
 using FishNet.Managing;
+using FishNet.Managing.Logging;
 using FishNet.Object;
 using FishNet.Object.Synchronizing;
 using System.Collections;
@@ -8,82 +10,36 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using UnityEngine;
 
-public class GameManager : NetworkBehaviour
+public class GameManager : MonoBehaviour
 {
-    public readonly SyncList<PlayerControllerNetwork> Players = new SyncList<PlayerControllerNetwork>();
-    private NetworkManager _networkManager;
-    [SerializeField] private PlayerControllerNetwork _playerPrefab;
-    public GameObject LoseCanvas, VictoryCanvas;
-    
-    private void Start()
-    {
-        InitializeOnce();
-    }
+    public static GameManager Instance { get; private set; }
+    public List<NetworkObject> Players = new List<NetworkObject>();
+    public GameObject Inicio, SetUp;
+    public bool Start, Game, Final;
 
     private void Awake()
     {
-        Players.OnChange += Players_OnChange;
+        Instance = this;
+        Start = true;
     }
 
-    private void Players_OnChange(SyncListOperation op, int index, PlayerControllerNetwork oldItem, PlayerControllerNetwork newItem, bool asServer)
+    private void Update()
     {
-        switch (op)
+        if (Start && Players.Count < 2)
         {
-            case SyncListOperation.Add:
-                print("Jugador Vivo");
-                break;
-
-            case SyncListOperation.RemoveAt:
-                break ;
-            case SyncListOperation.Complete:
-                break;
-
+            Inicio.SetActive(true);
+        }
+        else if (Start && Players.Count >= 2) { 
+            Inicio.SetActive(false);
+            SetUp.SetActive(true);
+            float timer = 0;
+            timer += timer * Time.deltaTime;
+            if (timer >= 30) {
+                SetUp.SetActive(false);
+                Start = false;
+                Game = true;
+            }
         }
     }
 
-    void Update()
-    {
-
-        print(Players[0].isAlive.Value);
-    }
-
-    private void InitializeOnce()
-    {
-        _networkManager = InstanceFinder.NetworkManager;
-        if (_networkManager == null)
-        {
-            NetworkManagerExtensions.LogWarning($"PlayerSpawner on {gameObject.name} cannot work as NetworkManager wasn't found on this object or within parent objects.");
-            return;
-        }
-
-        _networkManager.SceneManager.OnClientLoadedStartScenes += SceneManager_OnClientLoadedStartScenes;
-    }
-
-    private void SceneManager_OnClientLoadedStartScenes(NetworkConnection conn, bool asServer)
-    {
-        if (!asServer)
-            return;
-        if (_playerPrefab == null)
-        {
-            NetworkManagerExtensions.LogWarning($"Player prefab is empty and cannot be spawned for connection {conn.ClientId}.");
-            return;
-        }
-
-        Players.Add(_playerPrefab);
-    }
-
-
-
-    [ServerRpc(RequireOwnership = false)]
-    void LoseServerRPC()
-    {
-        print("Server");
-        LoseClientRPC();
-    }
-
-    [ObserversRpc]
-    void LoseClientRPC()
-    {
-        LoseCanvas.SetActive(true);
-    }
 }

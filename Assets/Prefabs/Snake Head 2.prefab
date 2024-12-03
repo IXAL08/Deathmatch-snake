@@ -15,6 +15,7 @@ GameObject:
   - component: {fileID: 3437142070251626952}
   - component: {fileID: 7869470530742251175}
   - component: {fileID: 6141251145020512366}
+  - component: {fileID: 7348027760373603605}
   m_Layer: 0
   m_Name: Snake Head 2
   m_TagString: Player
@@ -199,6 +200,7 @@ MonoBehaviour:
   _networkBehaviours:
   - {fileID: 3437142070251626952}
   - {fileID: 6141251145020512366}
+  - {fileID: 7348027760373603605}
   <SerializedRootNetworkBehaviour>k__BackingField: {fileID: 0}
   <SerializedNestedNetworkObjects>k__BackingField: []
   _isNetworked: 1
@@ -220,7 +222,7 @@ MonoBehaviour:
   _spectatorInterpolation: 2
   _enableTeleport: 0
   _teleportThreshold: 1
-  <PrefabId>k__BackingField: 6
+  <PrefabId>k__BackingField: 3
   <SpawnableCollectionId>k__BackingField: 0
   <AssetPathHash>k__BackingField: 10145829381084791119
   <SceneId>k__BackingField: 0
@@ -271,6 +273,22 @@ MonoBehaviour:
     X: 0
     Y: 0
     Z: 0
+--- !u!114 &7348027760373603605
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 393183314720909515}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9cbc2399db34a2842b529b0ff94f68e0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _componentIndexCache: 2
+  _addedNetworkObject: {fileID: 7869470530742251175}
+  _networkObjectCache: {fileID: 7869470530742251175}
+  spriteRenderer: {fileID: 1446820944701311746}
 --- !u!1 &3277945880062113051
 GameObject:
   m_ObjectHideFlags: 0
@@ -305,8 +323,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 360, y: 400}
+  m_AnchoredPosition: {x: -0.0000076293945, y: 284}
+  m_SizeDelta: {x: 445.1738, y: 400}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &8539313384238901729
 CanvasRenderer:
@@ -337,7 +355,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   m_FontData:
-    m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
+    m_Font: {fileID: 12800000, guid: fc6bade8e5ed5ff49998044bd4bcd2a7, type: 3}
     m_FontSize: 80
     m_FontStyle: 0
     m_BestFit: 0
