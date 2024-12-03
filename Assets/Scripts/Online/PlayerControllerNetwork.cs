@@ -37,10 +37,11 @@ public class PlayerControllerNetwork : NetworkBehaviour
 
         if (GameManager.Instance.Start == true)
         {
-            isAlive.Value = false;
-        }else
+            CambiarBoolRPC();
+        }
+        else
         {
-            isAlive.Value = true;
+            CambiarBoolDosRPC();
         }
 
         if (isAlive.Value)
@@ -111,7 +112,10 @@ public class PlayerControllerNetwork : NetworkBehaviour
         if (collision.gameObject.tag == "Obstacle")
         {
             Dead();
-            CanvasOn(Owner);
+            if(GameManager.Instance.Players.Count > 1)
+            {
+                CanvasOn(Owner);
+            }
         }
     }
 
@@ -199,10 +203,16 @@ public class PlayerControllerNetwork : NetworkBehaviour
 
     }
 
-    [ObserversRpc]
+    [ServerRpc(RequireOwnership = false)]
     void CambiarBoolRPC()
     {
         isAlive.Value = false;
+    }
+
+    [ServerRpc(RequireOwnership = false)]
+    void CambiarBoolDosRPC()
+    {
+        isAlive.Value = true;
     }
 
     [TargetRpc]

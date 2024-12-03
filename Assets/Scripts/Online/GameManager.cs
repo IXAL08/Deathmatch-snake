@@ -14,7 +14,8 @@ public class GameManager : MonoBehaviour
 {
     public static GameManager Instance { get; private set; }
     public List<NetworkObject> Players = new List<NetworkObject>();
-    public GameObject Inicio, SetUp;
+    public float timer = 0;
+    public GameObject Inicio, SetUp, Fin;
     public bool Start, Game, Final;
 
     private void Awake()
@@ -32,12 +33,28 @@ public class GameManager : MonoBehaviour
         else if (Start && Players.Count >= 2) { 
             Inicio.SetActive(false);
             SetUp.SetActive(true);
-            float timer = 0;
-            timer += timer * Time.deltaTime;
+
+            timer += Time.deltaTime;
             if (timer >= 30) {
                 SetUp.SetActive(false);
                 Start = false;
                 Game = true;
+                timer = 0;
+            }
+        }
+
+        if (Game && Players.Count == 1) {
+            Fin.SetActive(true);
+            Game = false;
+            Final = true;
+        }
+
+        if (Final)
+        {
+            timer += Time.deltaTime;
+            if (timer >= 10) {
+                UnityEngine.SceneManagement.SceneManager.LoadScene("MenuOnline");
+                timer = 0;
             }
         }
     }
